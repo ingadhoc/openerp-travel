@@ -26,7 +26,7 @@ from res_config import get_basic_passenger_limit
 
 
 class travel_travel(orm.Model):
-    """Travel"""
+    """Travel Plan"""
     _description = _(__doc__)
     _name = 'travel.travel'
     _inherit = ['mail.thread']
