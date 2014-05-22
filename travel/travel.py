@@ -23,8 +23,6 @@
 from openerp.osv import fields, orm
 from openerp.tools.translate import _
 from res_config import get_basic_passenger_limit
-
-
 class travel_travel(orm.Model):
     """Travel"""
     _description = _(__doc__)
