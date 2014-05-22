@@ -3,14 +3,22 @@
 language: python
 
 python:
+#  - "pypy" # not supported by odoo 8
+#  - "3.4"  # not supported by odoo 8
+#  - "3.3"  # not supported by odoo 8
   - "2.7"
+#  - "2.6"  # not supported by odoo 8
 
 env:
    - ODOO="https://github.com/Bubbles-IT/odoo/archive/master.tar.gz"  # Temp until https://github.com/odoo/odoo/pull/81 is solved
 #  - ODOO="https://github.com/odoo/odoo/archive/master.zip"
 #  - ODOO="ocb"
 
-# command to install dependencies
+# Need coveralls for coverage reports
+# Need flake8 for pep8 testing
+# Manually get PyChart
+# Install tested version of odoo (official or ocb)
+# Get modules from other repos which have dependencies (in this case travel requires modules from lp:partner-contact-management and lp:openerp-hr
 install: 
     - pip install coveralls flake8
     - pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
@@ -19,12 +27,17 @@ install:
     - bzr branch --stacked lp:partner-contact-management /tmp/partner-contact-management
     - bzr branch --stacked lp:openerp-hr /tmp/openerp-hr
 
-# Create and prep database
+# Create databae
+# Pre-install modules and dependencies
 before_script: 
     - createdb test
     - PYTHONPATH=$(dirname $(which openerp-server))/.. openerp-server -d test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".")))') --addons-path=$(pwd),/tmp/partner-contact-management,/tmp/openerp-hr
 
-# command to run tests, e.g. python setup.py test
+# Test with flake, ignore F401 for __init__.py files, use a max length of 120
+# Run tests with coverage
+# Due to oddness of the odoo setup.py process, assure that import openerp gets it from env/openerp and not env/lib/python2.7/site-packages/openerp
+# only test modules in repo (list populated by directories in repo)
+# include current director and dependent repos in addons-path
 script:
     - flake8 . --max-line-length=120 --filename=__init__.py --ignore=F401
     - flake8 . --max-line-length=120 --exclude=__init__.py
