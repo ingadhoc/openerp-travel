@@ -22,7 +22,7 @@ install:
 # Create and prep database
 before_script: 
     - createdb test
-    - PYTHONPATH=$(dirname $(which openerp-server))/.. coverage run $(which openerp-server) -d test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".")))') --addons-path=$(pwd),/tmp/partner-contact-management,/tmp/openerp-hr
+    - PYTHONPATH=$(dirname $(which openerp-server))/.. openerp-server -d test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".")))') --addons-path=$(pwd),/tmp/partner-contact-management,/tmp/openerp-hr
 
 # command to run tests, e.g. python setup.py test
 script:
