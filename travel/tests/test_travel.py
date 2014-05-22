@@ -45,6 +45,13 @@ class test_travel(TransactionCase):
             'date_stop': self.year + '-01-14',
         }
 
+    def test_failiure_assert(self):
+        self.assertTrue(False)
+
+    def test_failiure_exception(self):
+        a = 1/0
+        a += 1
+
     def test_create_travel(self):
         cr, uid, vals, context = self.cr, self.uid, self.vals, self.context
         self.assertTrue(self.travel_model.create(
