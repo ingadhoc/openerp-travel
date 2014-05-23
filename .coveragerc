@@ -2,9 +2,14 @@
 
 [report]
 omit =
-    *__init__.py
-    odoo/*
     /usr/*
+    /tmp/*
+    */bin/*
+    */lib/*
+    */odoo/*
+    */openerp/*
+    */tests/*
+    *__init__.py
 
 # Regexes for lines to exclude from consideration
 exclude_lines =
