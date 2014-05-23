@@ -14,6 +14,9 @@ env:
 #  - ODOO="https://github.com/odoo/odoo/archive/master.zip"
 #  - ODOO="ocb"
 
+# Odoo depends on wkhtmltopdf > 0.12
+before_install: sudo apt-get install -qq wkhtmltopdf
+
 # Need coveralls for coverage reports
 # Need flake8 for pep8 testing
 # Manually get PyChart
@@ -22,7 +25,6 @@ env:
 install: 
     - pip install coveralls flake8
     - pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
-    - curl http://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.11.0_rc1-static-amd64.tar.bz2 | tar xjv  && sudo mv wkhtmltopdf-amd64 /usr/bin/wkhtmltopdf
     - pip install ${ODOO}
     - bzr branch --stacked lp:partner-contact-management /tmp/partner-contact-management
     - bzr branch --stacked lp:openerp-hr /tmp/openerp-hr
